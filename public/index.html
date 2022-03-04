@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+      <link rel="stylesheet" href="stylesheets/style.css"/>
+      <title>JSON</title>
+   </head>
+   <body>
+      <div class="container">
+         <!-- GET Button -->
+         <button onclick="getData()">Get</button>
+         <!-- POST Button -->
+         <button onclick="getElementById('button2').innerHTML='Created\
+          at: Wed Mar 14 09:29:44 +0000 2013 <br>Text: Lorem ipsum dolor\
+           sit amet, consectetur adipiscing elit. Praesent accumsan, eros\
+            vitae euismod pulvinar, sem arcu sollicitudin erat, a sagittis\
+             dui enim in nulla. <br> Screen name: johnmaeda <br> User ID:\
+              15414807 <br> Tweet ID: 311295879493062088 <br>';">Post</button>
+         <!-- UPDATE Button -->
+         <button onclick="getElementById('button2').innerHTML='Created\
+          at: Wed Mar 14 09:29:44 +0000 2013<br>Text: Lorem ipsum dolor\
+           sit amet, consectetur adipiscing elit. Praesent accumsan, eros\
+            vitae euismod pulvinar, sem arcu sollicitudin erat, a sagittis\
+             dui enim in nulla. <br> Screen name: SarahPrevette <br> User ID:\
+              14078377 <br> Tweet ID: 311295879493062088 <br>';">Update</button>
+         <!-- DELETE Button -->
+         <button onclick="getElementById('button2').innerHTML=''">Delete
+        </button>
+      </div>
+      <p id="button1"></p>
+      <p id="button2"></p>
+      <p id="button3"></p>
+      <p id="button4"></p>
+      <div id="myData"></div>
+      <script>
+          // get data from JSON file
+         function getData () {
+             fetch('favs.json')
+                 .then(function (response) {
+                     return response.json();
+                 })
+                 // function call of appendData()
+                 .then(function (data) {
+                     appendData(data);
+                 })
+                 // print log to console
+                 .catch(function (err) {
+                     console.log('error: ' + err);
+                 });
+                 // append fetched data at the end of the container
+                 function appendData(data) {
+                 var mainContainer = document.getElementById("myData");
+                 // go through every entry in JSON file
+                 for (var i = 0; i < data.length; i++) {
+                     var div = document.createElement("div");
+                                     // Task 1: Get all tweets (created time ("created_at"), and tweet text ("text")) in the file
+                     div.innerHTML = 'Created at: ' + data[i].created_at + 
+                                     // Task 1: Get all tweets (created time ("created_at"), and tweet text ("text")) in the file
+                                     '<br>Text: ' + data[i].text + 
+                                     // Task 5: Update a screen_name (given name and new screen_name)
+                                     '<br>Screen name: ' + data[i].user.screen_name + 
+                                     // Task 2: Get all users' ID
+                                     '<br>User ID: ' + data[i].user.id + 
+                                     // Task 3: Get the details of tweet (text, created time), given ID
+                                     '<br>Tweet ID: ' + data[i].id +'<br><br>';
+                     // output data to container
+                     mainContainer.appendChild(div);
+                 }
+            }
+         }
+      </script>
+   </body>
+</html>
